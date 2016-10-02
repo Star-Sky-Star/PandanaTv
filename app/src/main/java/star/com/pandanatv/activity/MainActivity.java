@@ -24,6 +24,7 @@ public class MainActivity extends BaseActivity {
     protected ImageView mTabCustomImage;
     protected TextView mTabCustomText;
 
+    //数据准备
     private String[] mTitles = {"首页", "游戏", "娱乐", "女神", "我的"};
     private int[] mInts={
             R.drawable.home_icon_select,
@@ -31,15 +32,16 @@ public class MainActivity extends BaseActivity {
             R.drawable.yule_icon_select,
             R.drawable.women_icon_select,
             R.drawable.wode_icon_select};
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         initView();
-
     }
 
-
+    //自定义tablayout
     private void initView() {
         mHomeViewpager = (ViewPager) findViewById(R.id.home_viewpager);
         mHomeTab = (TabLayout) findViewById(R.id.home_tab);
@@ -69,6 +71,9 @@ public class MainActivity extends BaseActivity {
             mTabCustomImage.setImageResource(mInts[i]);
             tabAt.setCustomView(inflate);
         }
-
     }
+
+
+
+
 }
