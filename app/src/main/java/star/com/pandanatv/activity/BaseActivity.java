@@ -20,7 +20,7 @@ public  class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar supportActionBar = getSupportActionBar();
-        setContentView(R.layout.custom_actionbar);
+        //setContentView(R.layout.custom_actionbar);
         supportActionBar.setDisplayShowCustomEnabled(true);
         supportActionBar.setCustomView(R.layout.custom_actionbar);
         initView();

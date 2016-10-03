@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="2dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/s7"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageView"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+           >
+            <TextView
+                android:text="picture_descr"
+                android:layout_width="match_parent"
+                android:textSize="11dp"
+                android:layout_height="12dp"
+                android:singleLine="true"
+                android:textColor="#ffffffff"
+                android:id="@+id/picture_descr"/>
+        </FrameLayout>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:singleLine="true"
+            android:text="subTitle"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:background="#ffffff"
+            android:id="@+id/index_subtitle"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/inner_image_guanzhu"
+            android:src="@drawable/guanzhu_icon_select"
+            android:layout_alignBottom="@+id/favorite_number"
+            android:layout_toLeftOf="@+id/favorite_number"
+            android:layout_toStartOf="@+id/favorite_number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关注人数"
+            android:gravity="center_vertical"
+            android:id="@+id/favorite_number"
+            android:layout_alignTop="@+id/index_subtitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+</LinearLayout>
