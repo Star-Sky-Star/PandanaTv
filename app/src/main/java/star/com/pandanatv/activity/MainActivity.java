@@ -5,12 +5,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import star.com.pandanatv.fragment.GameFragment;
 import star.com.pandanatv.fragment.HomeFragment;
 import star.com.pandanatv.adapter.HomeFragmentAdapter;
 import star.com.pandanatv.R;
@@ -40,20 +42,21 @@ public class MainActivity extends BaseActivity {
         super.setContentView(R.layout.activity_main);
         initView();
     }
-
     //自定义tablayout
     private void initView() {
         mHomeViewpager = (ViewPager) findViewById(R.id.home_viewpager);
         mHomeTab = (TabLayout) findViewById(R.id.home_tab);
-
         HomeFragmentAdapter adapter = new HomeFragmentAdapter(getSupportFragmentManager());
         ArrayList<Fragment> fragments = new ArrayList<>();
-
         ArrayList<String> strings = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
             strings.add(mTitles[i]);
-            fragments.add(HomeFragment.newInstance(i));
         }
+        fragments.add(HomeFragment.newInstance(0));
+        fragments.add(GameFragment.newInstance());
+        fragments.add(GameFragment.newInstance());
+        fragments.add(GameFragment.newInstance());
+        fragments.add(GameFragment.newInstance());
         adapter.setFragments(fragments);
         adapter.setStrings(strings);
         mHomeViewpager.setAdapter(adapter);
@@ -65,12 +68,30 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < mTitles.length; i++) {
             TabLayout.Tab tabAt = mHomeTab.getTabAt(i);
             View inflate = View.inflate(this, R.layout.tab_custom_view, null);
-           mTabCustomImage= (ImageView) inflate.findViewById(R.id.tab_custom_image);
+            mTabCustomImage= (ImageView) inflate.findViewById(R.id.tab_custom_image);
             mTabCustomText= (TextView) inflate.findViewById(R.id.tab_custom_text);
             mTabCustomText.setText(mTitles[i]);
             mTabCustomImage.setImageResource(mInts[i]);
             tabAt.setCustomView(inflate);
         }
+
+        mHomeTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                CharSequence text = tab.getText();
+                 setTitle(text.toString());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
 

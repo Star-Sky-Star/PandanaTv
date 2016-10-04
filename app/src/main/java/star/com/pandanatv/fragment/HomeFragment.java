@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import star.com.pandanatv.R;
 import star.com.pandanatv.adapter.HomeInnerFragmentAdapter;
-
 /**
  * Created by Administrator on 2016/10/1.
  */
@@ -34,16 +33,13 @@ public class HomeFragment extends Fragment {
     private ImageView mInnerImageView;
     private TextView mInnerTextView;
 
-
     public static HomeFragment newInstance(int i) {
-
         Bundle args = new Bundle();
         args.putInt("state", i);
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,8 +47,6 @@ public class HomeFragment extends Fragment {
         initView(rootView);
         return rootView;
     }
-
-
     private void initView(View rootView) {
         mHomeInnerTab = (TabLayout) rootView.findViewById(R.id.home_inner_tab);
         mHomeInnerViewpager = (ViewPager) rootView.findViewById(R.id.home_inner_viewpager);
@@ -60,8 +54,21 @@ public class HomeFragment extends Fragment {
         ArrayList<Fragment> fragments = new ArrayList<>();
         ArrayList<String> strings = new ArrayList<>();
         for (int i = 0; i < mTitles.length; i++) {
-            fragments.add(InnerFragment.newInstance(i));
             strings.add(mTitles[i]);
+            if (i==0){
+                fragments.add(InnerFragment.newInstance(i));
+            }
+            else if (i==1){
+                fragments.add(ZhiboFragment.newInstance(i));
+            }
+            else if(i==2){
+                fragments.add(LolFragment.newInstance(i));
+            }else if (i == 3) {
+                fragments.add(LushiFragment.newInstance(i));
+            }
+            else{
+                fragments.add(LolFragment.newInstance(i));
+            }
         }
         adapter.setFragments(fragments);
         adapter.setStrings(strings);

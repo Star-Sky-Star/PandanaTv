@@ -2,20 +2,24 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:layout_height="match_parent">
 
     <TextView
-        android:text="Title"
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/custom_actionbar_text"
         android:gravity="center"
+        android:background="@drawable/home_banner_bg"
+        android:textColor="#000"
+
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>
     <ImageButton
         android:layout_width="28dp"
         android:layout_height="28dp"
+        android:onClick="click"
         android:id="@+id/imageButton"
         android:layout_margin="10dp"
         android:background="@drawable/search"

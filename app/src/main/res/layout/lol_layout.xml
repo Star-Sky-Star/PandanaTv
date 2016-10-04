@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lol_swip_refresh">
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+            <com.stx.xhb.xbanner.XBanner
+                 android:layout_width="match_parent"
+                 android:layout_height="100dp"
+                 android:id="@+id/lol_top_vp"/>
+             <GridView
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="1"
+                 android:id="@+id/lol_grid"
+                 android:numColumns="2"
+                 android:verticalSpacing="2dp"
+                 android:horizontalSpacing="2dp"/>
+         </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

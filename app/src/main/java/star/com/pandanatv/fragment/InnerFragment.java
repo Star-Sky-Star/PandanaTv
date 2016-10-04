@@ -3,6 +3,7 @@ package star.com.pandanatv.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +38,9 @@ public class InnerFragment extends Fragment {
     protected XBanner mInnerXbanner;
     protected GridView mGrid;
     protected ListView mInnerList;
+    protected SwipeRefreshLayout mSwipInnerFragment;
 
     public static InnerFragment newInstance(int key) {
-
         Bundle args = new Bundle();
         args.putInt("key", key);
         InnerFragment fragment = new InnerFragment();
@@ -56,53 +57,63 @@ public class InnerFragment extends Fragment {
     }
 
     private void initView(View rootView) {
-        mInnerXbanner = (XBanner) rootView.findViewById(R.id.inner_xbanner);
         mInnerList = (ListView) rootView.findViewById(R.id.inner_list);
+        mSwipInnerFragment = (SwipeRefreshLayout) rootView.findViewById(R.id.swip_inner_fragment);
+        mInnerList.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout
+                .list_head_viewpager,null));
+        mInnerXbanner = (XBanner) rootView.findViewById(R.id.inner_list_head);
         // TODO 设置数据
         int key = getArguments().getInt("key", -1);
-        HttpUtils httpUtils = new HttpUtils();
-        httpUtils.send(HttpRequest.HttpMethod.GET, Consts.INNER_TOP_RECOM, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String result = responseInfo.result;
-                Gson gson = new Gson();
-                Recommend_viewpagerData recommend_viewpagerData = gson.fromJson(result, Recommend_viewpagerData.class);
-                List<Recommend_viewpagerData.DataBean> data = recommend_viewpagerData.getData();
-                final List<String> imgesUrl = new ArrayList<>();
-                for (int i = 0; i < data.size(); i++) {
-                    imgesUrl.add(data.get(i).getSmallimg());
-                }
-                mInnerXbanner.setData(imgesUrl);
-                mInnerXbanner.setmAdapter(new XBanner.XBannerAdapter() {
-                    @Override
-                    public void loadBanner(XBanner banner, View view, int position) {
-                        Glide.with(getContext()).load(imgesUrl.get(position)).into((ImageView) view);
+        if (key == 0) {
+            HttpUtils httpUtils = new HttpUtils();
+            httpUtils.send(HttpRequest.HttpMethod.GET, Consts.INNER_TOP_RECOM, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    String result = responseInfo.result;
+                    Gson gson = new Gson();
+                    Recommend_viewpagerData recommend_viewpagerData = gson.fromJson(result, Recommend_viewpagerData.class);
+                    List<Recommend_viewpagerData.DataBean> data = recommend_viewpagerData.getData();
+                    final List<String> imgesUrl = new ArrayList<>();
+                    for (int i = 0; i < data.size(); i++) {
+                        imgesUrl.add(data.get(i).getPicture());
                     }
-                });
-            }
+                    mInnerXbanner.setData(imgesUrl);
+                    mInnerXbanner.setmAdapter(new XBanner.XBannerAdapter() {
+                        @Override
+                        public void loadBanner(XBanner banner, View view, int position) {
+                            Glide.with(getContext()).load(imgesUrl.get(position)).into((ImageView) view);
+                        }
 
-            @Override
-            public void onFailure(HttpException error, String msg) {
-                Log.e("error", "网络请求错误信息是 " + error.getMessage());
-            }
-        });
+                    });
+                  mSwipInnerFragment.computeScroll();
+                }
 
-        httpUtils.send(HttpRequest.HttpMethod.GET, Consts.INNER_LIST_DATA, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String result = responseInfo.result;
-                Gson gson=new Gson();
-                Recom_list_data recom_list_data = gson.fromJson(result, Recom_list_data.class);
-                List<Recom_list_data.DataBean> data = recom_list_data.getData();
-                HomeInnerListAdapter adapter = new HomeInnerListAdapter();
-                adapter.setDataBeen((ArrayList<Recom_list_data.DataBean>) data);
-                mInnerList.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onFailure(HttpException error, String msg) {
-                Log.e("error", "List中网络请求错误信息是 " + error.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(HttpException error, String msg) {
+                    Log.e("error", "网络请求错误信息是 " + error.getMessage());
+                }
+            });
+
+            httpUtils.send(HttpRequest.HttpMethod.GET, Consts.INNER_SHOUYE, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    String result = responseInfo.result;
+                    Gson gson = new Gson();
+                    Recom_list_data recom_list_data = gson.fromJson(result, Recom_list_data.class);
+                    List<Recom_list_data.DataBean> data = recom_list_data.getData();
+                    HomeInnerListAdapter adapter = new HomeInnerListAdapter();
+                    adapter.setDataBeen((ArrayList<Recom_list_data.DataBean>) data);
+                    mInnerList.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(HttpException error, String msg) {
+                    Log.e("error", "List中网络请求错误信息是 " + error.getMessage());
+                }
+            });
+        }
+
+
     }
 }
